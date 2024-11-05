@@ -8,16 +8,16 @@ const borrowedBookSchema = new mongoose.Schema({
     book: {
         type: mongoose.Types.ObjectId,
         required: true,
-        ref: "Book" // Pastikan referensi ini sesuai dengan nama model buku
+        ref: "Book" 
     },
     borrower: {
         type: mongoose.Types.ObjectId,
         required: true,
-        ref: "Borrower" // Pastikan referensi ini sesuai dengan nama model peminjam
+        ref: "Borrower" 
     },
     expectedReturnAt: {
         type: Date,
-        required: true // Pastikan field ini dibutuhkan
+        required: true 
     },
     borrowedAt: {
         type: Date,
@@ -40,18 +40,16 @@ const borrowedBookSchema = new mongoose.Schema({
     },
 });
 
-// Middleware untuk memperbarui updatedAt sebelum menyimpan
 borrowedBookSchema.pre('save', function(next) {
     this.updatedAt = Date.now();
     next();
 });
 
-// Mengatur transformasi untuk JSON
 borrowedBookSchema.set("toJSON", {
     transform: (doc, ret) => {
-        ret.id = ret._id; // Menambahkan id ke hasil JSON
-        delete ret._id; // Menghapus _id asli
-        delete ret.__v; // Menghapus versi
+        ret.id = ret._id; 
+        delete ret._id; 
+        delete ret.__v; 
         return ret;
     }
 });
